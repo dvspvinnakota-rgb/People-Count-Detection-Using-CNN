@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#101923">
+    <title>CrowdCount — Smart Crowd Detection</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js"></script>
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="CrowdCount home">
+          <span class="brand-mark" aria-hidden="true">C</span>
+          <span>Crowd<span class="brand-accent">Count</span></span>
+        </a>
+        <span class="privacy-note"><span class="privacy-dot" aria-hidden="true"></span>Images stay on this device</span>
+      </header>
+
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">SMART CROWD ANALYSIS</p>
+        <h1 id="page-title">See the crowd.<br><span>Know the number.</span></h1>
+        <p class="intro-copy">Upload a photo to detect people and get an instant count. Your image is processed in your browser and is never uploaded.</p>
+      </section>
+
+      <section class="workspace" aria-label="Crowd counting workspace">
+        <div class="analysis-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Image analysis</h2>
+              <p>Choose a clear image with people in view.</p>
+            </div>
+            <span class="model-status" id="modelStatus" role="status">
+              <span class="status-dot" aria-hidden="true"></span>
+              <span id="modelStatusText">Loading detection model…</span>
+            </span>
+          </div>
+
+          <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose an image or drop one here">
+            <input id="imageInput" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+            <div class="dropzone-content" id="dropzoneContent">
+              <div class="upload-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M5 14.5v3A2.5 2.5 0 0 0 7.5 20h9a2.5 2.5 0 0 0 2.5-2.5v-3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h3>Drop your image here</h3>
+              <p>or <button class="text-button" id="chooseButton" type="button">browse files</button></p>
+              <span class="file-hint">JPG, PNG, or WebP · up to 20 MB</span>
+            </div>
+            <div class="preview-wrap" id="previewWrap" hidden>
+              <canvas id="resultCanvas" aria-label="Uploaded image with detected people highlighted"></canvas>
+            </div>
+          </div>
+
+          <div class="panel-footer">
+            <p id="message" aria-live="polite">Preparing the person detection model…</p>
+            <button class="reset-button" id="resetButton" type="button" hidden>Clear image</button>
+          </div>
+        </div>
+
+        <aside class="results-panel" aria-label="Detection results">
+          <p class="result-label">PEOPLE DETECTED</p>
+          <div class="count-row">
+            <span class="count" id="count">—</span>
+            <span class="count-unit">people</span>
+          </div>
+          <p class="result-caption" id="resultCaption">Add an image to start counting.</p>
+
+          <div class="result-divider"></div>
+          <div class="detail-row">
+            <span>Processing</span>
+            <strong id="processingTime">—</strong>
+          </div>
+          <div class="detail-row">
+            <span>Detection threshold</span>
+            <strong>40%</strong>
+          </div>
+          <div class="legend">
+            <span class="legend-box" aria-hidden="true"></span>
+            <span>Detected person</span>
+          </div>
+          <div class="privacy-card">
+            <span class="privacy-icon" aria-hidden="true">⌁</span>
+            <p><strong>Private by design</strong><br>Your image is analyzed locally and is not saved or sent to a server.</p>
+          </div>
+        </aside>
+      </section>
+
+      <footer class="page-footer">
+        <span>Powered by COCO-SSD object detection</span>
+        <span>Results are estimates and may miss people in dense or obstructed scenes.</span>
+      </footer>
+    </main>
+  </body>
+</html>
